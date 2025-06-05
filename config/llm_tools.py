@@ -6,6 +6,7 @@ from langchain_groq import ChatGroq
 
 load_dotenv()
 
-llm = ChatGroq(model="llama-3.1-8b-instant")
+# llm = ChatGroq(model="llama-3.1-8b-instant")
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
 tavily_search = TavilySearchResults(max_results=2)
 python_repl_tool = PythonREPLTool()

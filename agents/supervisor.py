@@ -28,7 +28,7 @@ def supervisor_node(state: MessagesState) -> Command[Literal["enhancer", "resear
         1. **Prompt Enhancer**: They clarify ambiguous requests, improve poorly defined queries, and ensure the task is well-structured before deeper processing begins.
         2. **Researcher**: Specializes in information gathering, fact-finding, and collecting relevant data needed to address the user's request.
         3. **Coder**: Focuses on technical implementation, calculations, data analysis, algorithm development, and coding solutions.
-        4. **Normal**: Always consider this agent first.A standalone llm which can answer common questions like user greetings and historical data.
+        4. **Normal**: A standalone llm which can answer common questions like user greetings and historical data.
 
         **Your Responsibilities**:
         1. Analyze each user request and agent response for completeness, accuracy, and relevance.
