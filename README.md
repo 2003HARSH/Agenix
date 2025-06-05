@@ -61,7 +61,7 @@ Make sure you have an `.env` file with your API keys, if needed.
 ## 🚀 Run the App
 
 ```bash
-streamlit run streamlit_app.py
+streamlit run main.py
 ```
 
 ---
