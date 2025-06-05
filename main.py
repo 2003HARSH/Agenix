@@ -9,9 +9,14 @@ from agents.researcher import research_node
 from agents.coder import code_node
 from agents.validator import validator_node
 from agents.normal import normal_node
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 from langgraph.checkpoint.sqlite import SqliteSaver
 import sqlite3
+
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
 
 
 sqlite_conn=sqlite3.connect("checkpoint.sqlite",check_same_thread=False)
@@ -43,8 +48,8 @@ graph.add_edge(START, "supervisor")
 app = graph.compile(checkpointer=memory)
 
 
-st.set_page_config(page_title="LangGraph Chatbot", page_icon="💬")
-st.title("LangGraph Powered Chatbot")
+st.set_page_config(page_title="Supervisor Based Multi-Agent Chatbot", page_icon="💬")
+st.title("Supervisor Based Multi-Agent Chatbot")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
