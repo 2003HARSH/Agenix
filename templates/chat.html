@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex vh-100">
+    <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+        <a href="{{ url_for('main.chat') }}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-4">Agenix</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="#" class="nav-link active" aria-current="page">
+                    <i class="fa fa-comment me-2"></i>
+                    Current Chat
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-user-circle fs-4 me-2"></i>
+                <strong>{{ current_user.name }}</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sign out</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="chat-area w-100 d-flex flex-column">
+        <div id="chat-box" class="chat-box flex-grow-1 p-4">
+            {% for message in messages %}
+                <div class="message-wrapper {% if message.name == 'user' %}user-message{% else %}bot-message{% endif %}">
+                    <div class="message-content">
+                        {% if message.name != 'user' %}
+                        <div class="avatar agenix-avatar">A</div>
+                        {% endif %}
+                        <p>{{ message.content | safe }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="chat-input-area p-3">
+            <form id="chat-form" method="POST" action="{{ url_for('main.chat') }}" class="w-100">
+                <div class="input-group">
+                    <input type="text" id="prompt-input" name="prompt" class="form-control" placeholder="Ask something..." autocomplete="off" autofocus>
+                    <button class="btn btn-primary" type="submit" id="send-button">
+                        <i class="fa fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

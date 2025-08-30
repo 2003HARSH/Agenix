@@ -1,0 +1,121 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #343541; /* Main background color */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background-color: #202123 !important; /* Sidebar color */
+}
+
+.sidebar .nav-link {
+    color: #ececf1;
+}
+
+.sidebar .nav-link.active {
+    background-color: #343541;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #2a2b32;
+}
+
+/* Main Chat Area */
+.chat-area {
+    background-color: #343541;
+}
+
+.chat-box {
+    overflow-y: auto;
+}
+
+/* Message Styling */
+.message-wrapper {
+    display: flex;
+    margin-bottom: 1.5rem;
+}
+
+.message-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    max-width: 80%;
+}
+
+.message-content p {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 8px;
+    white-space: pre-wrap; /* Preserve whitespace and newlines */
+    line-height: 1.5;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.agenix-avatar {
+    background-color: #19c37d;
+    color: white;
+}
+
+/* Bot Message Alignment */
+.bot-message {
+    justify-content: flex-start;
+}
+
+.bot-message .message-content p {
+    background-color: #444654;
+}
+
+/* User Message Alignment */
+.user-message {
+    justify-content: flex-end;
+}
+
+.user-message .message-content {
+    flex-direction: row-reverse;
+}
+
+.user-message .message-content p {
+    background-color: transparent; /* User message has no bubble */
+}
+
+/* Chat Input */
+.chat-input-area {
+    background-color: #343541;
+}
+
+#chat-form .input-group {
+    max-width: 768px;
+    margin: 0 auto;
+}
+
+#prompt-input {
+    background-color: #40414f;
+    border-color: #40414f;
+    color: white;
+}
+
+#prompt-input:focus {
+    background-color: #40414f;
+    border-color: #565869;
+    box-shadow: none;
+    color: white;
+}
+
+#send-button {
+    background-color: #40414f;
+    border-color: #40414f;
+}
