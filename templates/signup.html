@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form method="POST" action="/signup">
-        <h2>Sign Up</h2>
-        <input type="email" name="email" placeholder="Email" autofocus="">
-        <input type="text" name="name" placeholder="Name" autofocus="">
-        <input type="password" name="password" placeholder="Password">
-        <button>Sign Up</button>
-    </form>
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="text-center mb-4">Create Account</h2>
+        <form method="POST" action="/signup">
+            <div class="mb-3">
+                <input type="text" name="name" class="form-control" placeholder="Your Name" required autofocus>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            <div class="text-center mt-3">
+                <a href="{{ url_for('auth.login') }}">Already have an account? Login</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

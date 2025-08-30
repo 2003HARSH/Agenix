@@ -1,21 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form method="POST" action="/login">
-        <h2>Login</h2>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="notification is-danger">
-                {{ messages[0] }}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="text-center mb-4">Login</h2>
+        <form method="POST" action="/login">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+            {% endwith %}
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email Address" required autofocus>
             </div>
-        {% endif %}
-        {% endwith %}
-        <input type="email" name="email" placeholder="Your Email" autofocus="">
-        <input type="password" name="password" placeholder="Your Password">
-        <label class="checkbox">
-            <input type="checkbox" name="remember">
-            Remember me
-        </label>
-        <button>Login</button>
-    </form>
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" name="remember" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <div class="text-center mt-3">
+                <a href="{{ url_for('auth.signup') }}">Don't have an account? Sign Up</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

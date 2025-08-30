@@ -1,19 +1,66 @@
+/* Global & Body Styles */
 html, body {
     height: 100%;
 }
 
 body {
     background-color: #343541; /* Main background color */
+    color: #ececf1;
 }
 
+a {
+    color: #a7a7ff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Login & Signup Pages --- */
+.auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.auth-card {
+    background-color: #40414f;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid #565869;
+}
+
+.auth-card .form-control {
+    background-color: #343541;
+    border-color: #565869;
+    color: #ececf1;
+    padding: 0.75rem 1rem;
+}
+
+.auth-card .form-control:focus {
+    background-color: #343541;
+    border-color: #a7a7ff;
+    box-shadow: 0 0 0 0.25rem rgba(167, 167, 255, 0.25);
+    color: #ececf1;
+}
+
+.auth-card .btn-primary {
+    background-color: #5865f2;
+    border-color: #5865f2;
+    padding: 0.75rem;
+    font-weight: bold;
+}
+
+/* --- Chat Page --- */
 /* Sidebar */
 .sidebar {
     width: 260px;
     background-color: #202123 !important; /* Sidebar color */
-}
-
-.sidebar .nav-link {
-    color: #ececf1;
 }
 
 .sidebar .nav-link.active {
@@ -62,39 +109,41 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    font-size: 1.2rem;
     flex-shrink: 0;
 }
 
+/* Bot Message */
+.bot-message {
+    justify-content: flex-start;
+}
 .agenix-avatar {
     background-color: #19c37d;
     color: white;
 }
-
-/* Bot Message Alignment */
-.bot-message {
-    justify-content: flex-start;
-}
-
 .bot-message .message-content p {
     background-color: #444654;
 }
 
-/* User Message Alignment */
+/* User Message */
 .user-message {
     justify-content: flex-end;
 }
-
 .user-message .message-content {
     flex-direction: row-reverse;
 }
-
+.user-avatar {
+    background-color: #5865f2;
+    color: white;
+}
 .user-message .message-content p {
-    background-color: transparent; /* User message has no bubble */
+    background-color: #2a2b32;
 }
 
 /* Chat Input */
 .chat-input-area {
     background-color: #343541;
+    border-top: 1px solid #444654;
 }
 
 #chat-form .input-group {
@@ -118,4 +167,74 @@ body {
 #send-button {
     background-color: #40414f;
     border-color: #40414f;
+}
+/* --- Homepage / Index Page --- */
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.main-content {
+    max-width: 900px;
+    width: 100%;
+}
+
+.homepage-container h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+
+.info-card {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.info-card h3 {
+    font-size: 1.1rem;
+    color: #a7a7ff;
+    margin-bottom: 1rem;
+}
+
+.info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-card li {
+    margin-bottom: 0.75rem;
+}
+
+.example-prompt {
+    display: block;
+    background-color: #40414f;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #565869;
+    color: #ececf1;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.example-prompt:hover {
+    background-color: #4f505e;
+    color: #fff;
+    text-decoration: none;
+}
+
+.auth-links .btn-auth {
+    background-color: #5865f2;
+    border-color: #5865f2;
+    color: white;
+    font-weight: bold;
+    padding: 0.75rem 2rem;
+    margin: 0 0.5rem;
+}
+
+.auth-links .btn-auth:hover {
+    opacity: 0.9;
 }

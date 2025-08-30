@@ -32,8 +32,10 @@
             {% for message in messages %}
                 <div class="message-wrapper {% if message.name == 'user' %}user-message{% else %}bot-message{% endif %}">
                     <div class="message-content">
-                        {% if message.name != 'user' %}
-                        <div class="avatar agenix-avatar">A</div>
+                        {% if message.name == 'user' %}
+                            <div class="avatar user-avatar">{{ current_user.name[0] | upper }}</div>
+                        {% else %}
+                            <div class="avatar agenix-avatar">A</div>
                         {% endif %}
                         <p>{{ message.content | safe }}</p>
                     </div>

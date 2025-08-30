@@ -1,7 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Welcome to Agenix</h1>
-    <a href="{{ url_for('auth.login') }}">Login</a>
-    <a href="{{ url_for('auth.signup') }}">Sign Up</a>
+<div class="homepage-container">
+    <div class="main-content text-center">
+        <h1 class="mb-5">Agenix</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="info-card">
+                    <h3><i class="fa-regular fa-sun me-2"></i>Examples</h3>
+                    <ul>
+                        <li><a href="#" class="example-prompt">"Explain quantum computing in simple terms"</a></li>
+                        <li><a href="#" class="example-prompt">"Write a python script to sort a list"</a></li>
+                        <li><a href="#" class="example-prompt">"What is the capital of Mongolia?"</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-card">
+                    <h3><i class="fa-solid fa-bolt me-2"></i>Capabilities</h3>
+                    <ul>
+                        <li>Remembers user context in conversation</li>
+                        <li>Delegates tasks to specialized agents</li>
+                        <li>Can perform web searches for current info</li>
+                        <li>Executes and debugs Python code</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-card">
+                    <h3><i class="fa-solid fa-triangle-exclamation me-2"></i>Limitations</h3>
+                    <ul>
+                        <li>May occasionally generate incorrect information</li>
+                        <li>Knowledge limited to its last training cut-off</li>
+                        <li>Can produce biased or repetitive content</li>
+                        <li>Not a substitute for professional advice</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-links mt-5">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-auth">Login</a>
+            <a href="{{ url_for('auth.signup') }}" class="btn btn-auth">Sign Up</a>
+        </div>
+
+    </div>
+</div>
 {% endblock %}
