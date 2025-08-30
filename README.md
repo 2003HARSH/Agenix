@@ -1,48 +1,54 @@
-# 🤖 Agenix - A Multi-Agent Chatbot with LangGraph, Memory, and Tool Integration
+# 🤖 Agenix - Multi-Agent Chatbot with LangGraph, Flask, and Persistent Memory
 
-A modular, memory-aware chatbot powered by **LangGraph**, designed using a **Supervisor-based multi-agent system**. This project demonstrates a production-ready LLM workflow that can handle vague prompts, recall previous conversations, and intelligently delegate tasks across specialized agents.
+A production-ready, modular chatbot powered by **LangGraph**, built on a **Supervisor-based multi-agent architecture**. Agenix supports user authentication, session management, and persistent chat history, making it a practical framework for deploying advanced AI agents at scale.
 
 ---
 
 ## ✨ Features
 
 * 🔄 **Supervisor-Guided Agent Routing**
-  Dynamically dispatches queries to specialized agents based on intent.
+  Dynamically delegates queries to specialized agents (research, coding, validation, small talk).
 
-* 🧠 **SQL-Based Persistent Memory**
-  Stores chat history using thread IDs, allowing the model to remember user context across turns.
+* 🔐 **User Authentication**
+  Sign-in, sign-up, and session management built with Flask + PostgreSQL.
+
+* 💬 **Session-Based Chat**
+  Each user gets personalized chat sessions with persistent conversation history.
+
+* 🧠 **PostgreSQL-Backed Memory**
+  Stores and retrieves chat history by session ID for long-term context retention.
 
 * ⚡ **Tool-Aware and Extensible**
-  Agents are designed to support external tools, paving the way for search, RAG, web browsing, and more.
+  Agents support integration with external tools like search, RAG, and web browsing.
 
-* 🧩 **Modular Graph Architecture with LangGraph**
-  Each agent is a graph node, allowing for easy customization, debugging, and branching.
+* 🧩 **LangGraph Modular Architecture**
+  Each agent is a node in the graph, enabling easy customization, branching, and debugging.
 
-* 💬 **Interactive Chat UI (Streamlit)**
-  User-friendly interface with real-time streaming responses, agent tagging, and session-based chat memory.
+* 🌐 **Flask Web Interface**
+  Interactive chat UI with user accounts, session tracking, and agent-tagged responses.
 
 ---
 
 ## 🧠 Agents Overview
 
-| Agent          | Role Description                                                        |
-| -------------- | ----------------------------------------------------------------------- |
-| **Supervisor** | Entry point of the graph. Routes user queries to the appropriate agent. |
-| **Enhancer**   | Enhances vague or ambiguous queries. Can ask follow-up questions.       |
-| **Researcher** | Gathers relevant background information using google search.            |
-| **Coder**      | Generates and debugs code snippets based on user prompts.               |
-| **Validator**  | Verifies outputs and ensures factuality, completeness, and quality.     |
-| **Normal**     | Handles greetings, small talk, and informal interactions.               |
+| Agent          | Role Description                                                |
+| -------------- | --------------------------------------------------------------- |
+| **Supervisor** | Entry point of the graph. Routes queries to the right agent.    |
+| **Enhancer**   | Improves vague/ambiguous queries, can ask clarifying questions. |
+| **Researcher** | Gathers external knowledge (search APIs, docs, etc.).           |
+| **Coder**      | Generates and debugs code snippets.                             |
+| **Validator**  | Checks accuracy, factuality, and correctness of outputs.        |
+| **Normal**     | Handles greetings, small talk, and informal chat.               |
 
 ---
 
 ## 🛠 Tech Stack
 
-* 🧠 [LangGraph](https://github.com/langchain-ai/langgraph)
-* 🗃️ SQL-based Checkpointing 
+* 🧠 [LangGraph](https://github.com/langchain-ai/langgraph) for multi-agent orchestration
 * 💬 [LangChain](https://github.com/langchain-ai/langchain) agents & tools
-* 🌐 [Streamlit](https://streamlit.io/) chat UI
-* 🧱 Modular Python (each agent in its own module)
+* 🌐 **Flask** for backend + web interface
+* 🗃️ **PostgreSQL** for authentication & memory persistence
+* 🧱 Modular Python (each agent as a separate module)
 
 ---
 
@@ -54,69 +60,70 @@ cd agenix
 pip install -r requirements.txt
 ```
 
-Make sure you have an `.env` file with your API keys, if needed.
+Set up your `.env` file with:
+
+```
+DATABASE_URL=postgresql://user:password@localhost:5432/agenix
+SECRET_KEY=your_flask_secret_key
+OPENAI_API_KEY=your_openai_key
+```
 
 ---
 
 ## 🚀 Run the App
 
 ```bash
-streamlit run main.py
+python app.py
 ```
+
+Then open: [http://localhost:5000](http://localhost:5000)
 
 ---
 
 ## 🧪 Example Usage
 
-**User**: Hi, I’m Harsh
-**Bot** (Normal): Hello Harsh! How can I assist you today?
+**User**: Write a Python function for Fibonacci
+**Bot** (Coder → Validator): Returns optimized function with explanation.
 
 **User**: What’s my name?
-**Bot** (Validator): You mentioned your name is *Harsh* earlier.
+**Bot** (Validator): Recalls from earlier in the same session.
 
-**User**: Write a Python function to get the nth Fibonacci number
-**Bot** (Coder → Validator): Returns an optimized Python function with explanation.
-
----
-
-## 🧠 How Context Is Retained
-
-Each chat session uses a persistent `thread_id`. All message history is saved using a **SQL-based checkpointer** and is automatically passed to agents. Even after app restarts, your chatbot remembers prior interactions within that thread.
+**User**: Summarize a recent AI breakthrough
+**Bot** (Researcher → Enhancer → Validator): Provides fact-checked summary.
 
 ---
 
 ## 🧩 Architecture Diagram
 
 ```
-[START] → [Supervisor]
-              ↓
-   ┌──────────┴───────────┐
-[Enhancer]  [Researcher]  [Coder]  [Normal]
-               ↓               ↓        ↓
-                     →→→→ [Validator] →→→→ [END]
+[User Session] → [Supervisor]
+                     ↓
+     ┌───────────────┴───────────────┐
+ [Enhancer]   [Researcher]   [Coder]   [Normal]
+                    ↓            ↓         ↓
+                                           →  [Passthrough]  -> [Validator] -> [END]
 ```
 
 ---
 
 ## ✅ TODO
 
-* [ ] Add support for RAG via LangChain Tools
-* [ ] Enable agent self-reflection using LangGraph loops
-* [ ] Extend to multimodal input (images, documents)
-* [ ] Web deployable version with FastAPI
+* [ ] Add RAG support with vector DBs (FAISS/Chroma/Pinecone)
+* [ ] Implement agent self-reflection with LangGraph loops
+* [ ] Extend to multimodal input (images, PDFs)
+* [ ] Deploy Flask app with Docker + AWS/GCP
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests, issues, and ideas are welcome!
-If you’re working on LLM orchestration, LangGraph, or custom agents — let’s collaborate.
+Contributions, bug reports, and feature suggestions are welcome. Fork it, play with it, break it, and help make it better.
 
 ---
 
 ## 📜 License
 
-MIT License. Feel free to fork and build on top of it!
+MIT License — free to use, modify, and extend.
 
 ---
 
@@ -124,4 +131,4 @@ MIT License. Feel free to fork and build on top of it!
 
 * 👤 Author: [Harsh Gupta](https://www.linkedin.com/in/harsh-gupta-2021/)
 * 📫 Email: [harshnkgupta@gmail.com](mailto:harshnkgupta@gmail.com)
-
+* 💻 GitHub: [2003HARSH](https://github.com/2003HARSH)
