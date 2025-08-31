@@ -35,7 +35,7 @@ def research_node(state: MessagesState) -> Command[Literal["passthrough"]]:
     tavily_search = TavilySearchResults(llm=llm, max_results=3)
     
     research_agent = create_react_agent(
-        llm=llm,  
+        model=llm,  
         tools=[tavily_search],  
         prompt=prompt
     )
