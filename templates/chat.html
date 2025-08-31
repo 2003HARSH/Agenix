@@ -3,18 +3,21 @@
 {% block content %}
 <div class="d-flex vh-100">
     <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
-        <a href="{{ url_for('main.chat') }}"
+        <a href="{{ url_for('main.chat_index') }}"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <span class="fs-4">Agenix</span>
         </a>
         <hr>
+        <a href="{{ url_for('main.new_chat') }}" class="btn btn-primary mb-3">New Chat</a>
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
-                    <i class="fa fa-comment me-2"></i>
-                    Current Chat
+            {% for chat in chats %}
+            <li class="nav-item mb-1">
+                <a href="{{ url_for('main.chat', chat_id=chat.id) }}" class="nav-link {% if chat.id == active_chat_id %}active{% endif %}">
+                    <i class="fa fa-comment fa-fw me-2"></i>
+                    <span>{{ chat.name }}</span>
                 </a>
             </li>
+            {% endfor %}
         </ul>
         <hr>
         <div class="dropdown">
@@ -47,7 +50,7 @@
         </div>
 
         <div class="chat-input-area p-3">
-            <form id="chat-form" method="POST" action="{{ url_for('main.chat') }}" class="w-100">
+            <form id="chat-form" method="POST" action="{{ url_for('main.chat', chat_id=active_chat_id) }}" class="w-100">
                 <div class="input-group">
                     <input type="text" id="prompt-input" name="prompt" class="form-control"
                         placeholder="Ask something..." autocomplete="off" autofocus>
@@ -64,44 +67,31 @@
     document.addEventListener('DOMContentLoaded', function () {
         const chatBox = document.getElementById('chat-box');
         const chatForm = document.getElementById('chat-form');
-        const promptInput = document.getElementById('prompt-input');
-        const sendButton = document.getElementById('send-button');
-
-        // --- 1. Auto-scroll to the bottom on page load ---
+        
         chatBox.scrollTop = chatBox.scrollHeight;
 
         chatForm.addEventListener('submit', function (event) {
+            const promptInput = document.getElementById('prompt-input');
+            const sendButton = document.getElementById('send-button');
             const promptText = promptInput.value.trim();
 
             if (!promptText) {
-                event.preventDefault(); // Stop empty messages from being sent
+                event.preventDefault();
                 return;
             }
-
-            // Disable only the button to prevent multiple submissions
             sendButton.disabled = true;
-            sendButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'; // Add a loading spinner
-
-            // Create a sanitized version of the user's prompt to display
+            sendButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
             const sanitizedPrompt = promptText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
             const userNameInitial = "{{ current_user.name[0] | upper | e }}";
-
             const userMessageHTML = `
-        <div class="message-wrapper user-message">
-            <div class="message-content">
-                <div class="avatar user-avatar">${userNameInitial}</div>
-                <p>${sanitizedPrompt}</p>
-            </div>
-        </div>
-    `;
-
-            // Instantly add the user's message to the chat box
+                <div class="message-wrapper user-message">
+                    <div class="message-content">
+                        <div class="avatar user-avatar">${userNameInitial}</div>
+                        <p>${sanitizedPrompt}</p>
+                    </div>
+                </div>`;
             chatBox.insertAdjacentHTML('beforeend', userMessageHTML);
-
-            // Scroll to the new message
             chatBox.scrollTop = chatBox.scrollHeight;
-
-            // The form will now submit with the correct text.
         });
     });
 </script>

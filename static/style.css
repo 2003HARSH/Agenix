@@ -13,7 +13,7 @@ a {
     text-decoration: none;
 }
 a:hover {
-    text-decoration: underline;
+    text-decoration: none; 
 }
 
 /* --- Login & Signup Pages --- */
@@ -60,16 +60,22 @@ a:hover {
 /* Sidebar */
 .sidebar {
     width: 260px;
-    background-color: #202123 !important; /* Sidebar color */
+    background-color: #202123 !important;
+}
+
+.sidebar .nav-link {
+    /* Allow text to wrap */
+    white-space: normal;
+    word-break: break-all;
 }
 
 .sidebar .nav-link.active {
     background-color: #343541;
 }
-
 .sidebar .nav-link:hover {
     background-color: #2a2b32;
 }
+
 
 /* Main Chat Area */
 .chat-area {
@@ -97,7 +103,7 @@ a:hover {
     margin: 0;
     padding: 1rem;
     border-radius: 8px;
-    white-space: pre-wrap; /* Preserve whitespace and newlines */
+    white-space: pre-wrap;
     line-height: 1.5;
 }
 
@@ -223,7 +229,6 @@ a:hover {
 .example-prompt:hover {
     background-color: #4f505e;
     color: #fff;
-    text-decoration: none;
 }
 
 .auth-links .btn-auth {

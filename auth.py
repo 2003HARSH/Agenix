@@ -1,7 +1,8 @@
+# Agenix/auth.py
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import db
-from models import User
+from models import User, Chat
 from flask_login import login_user, logout_user, login_required
 import uuid
 
@@ -20,25 +21,26 @@ def login():
             return redirect(url_for('auth.login'))
 
         login_user(user, remember=True)
-        return redirect(url_for('main.chat'))
+        return redirect(url_for('main.chat_index'))
 
     return render_template('login.html')
 
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        # ... (existing code to get form data and check for user) ...
-        
-        # CORRECTED: Use a modern, salted hashing method
         new_user = User(
             email=request.form.get('email'), 
             name=request.form.get('name'), 
             password=generate_password_hash(request.form.get('password')),
-            # ADDED: Assign a unique thread ID to the new user
-            thread_id=str(uuid.uuid4())
         )
 
         db.session.add(new_user)
+        db.session.commit()
+
+        # Create a default chat for the new user, named after its thread_id
+        thread_id = str(uuid.uuid4())
+        new_chat = Chat(user_id=new_user.id, thread_id=thread_id, name=thread_id)
+        db.session.add(new_chat)
         db.session.commit()
 
         return redirect(url_for('auth.login'))
