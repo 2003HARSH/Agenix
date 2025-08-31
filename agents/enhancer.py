@@ -1,9 +1,8 @@
 from langchain_core.messages import HumanMessage
 from langgraph.graph import  MessagesState
-from config.llm_tools import llm
 from langgraph.types import Command
 from typing import Literal
-
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 def enhancer_node(state: MessagesState) -> Command[Literal["supervisor"]]:
 
@@ -26,6 +25,8 @@ def enhancer_node(state: MessagesState) -> Command[Literal["supervisor"]]:
     messages = [
         {"role": "system", "content": system_prompt},  
     ] + state["messages"]  
+
+    llm=ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
 
     enhanced_query = llm.invoke(messages)
 

@@ -3,12 +3,13 @@ from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.prebuilt import create_react_agent
 from langgraph.graph import MessagesState
-from config.llm_tools import llm, python_repl_tool
 from langgraph.types import Command
 from typing import Literal
+from langchain_experimental.tools import PythonREPLTool
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
-def code_node(state: MessagesState) -> Command[Literal["validator"]]:
+def code_node(state: MessagesState) -> Command[Literal["passthrough"]]:
     # Define the system prompt for the agent
     system_prompt = (
         "You are a coder and analyst. Focus on mathematical calculations, analyzing, solving math questions, "
@@ -22,6 +23,8 @@ def code_node(state: MessagesState) -> Command[Literal["validator"]]:
             ("placeholder", "{messages}"),
         ]
     )
+    llm=ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+    python_repl_tool = PythonREPLTool(llm=llm)
 
     # Pass the prompt template to the 'prompt' argument
     code_agent = create_react_agent(

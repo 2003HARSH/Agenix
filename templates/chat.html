@@ -37,8 +37,9 @@
                     {% if message.name == 'user' %}
                     <div class="avatar user-avatar">{{ current_user.name[0] | upper }}</div>
                     {% else %}
-                    <div class="avatar agenix-avatar">A</div>
-                    {% endif %}
+                    <div class="avatar agenix-avatar">
+                        <img src="{{ url_for('static', filename='favicon.png') }}" alt="Agenix Avatar">
+                    </div> {% endif %}
                     <p>{{ message.content | safe }}</p>
                 </div>
             </div>

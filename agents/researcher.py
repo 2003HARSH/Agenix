@@ -3,12 +3,14 @@ from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.prebuilt import create_react_agent
 from langgraph.graph import  MessagesState
-from config.llm_tools import search_llm, tavily_search
 from langgraph.types import Command
 from typing import Literal
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
-def research_node(state: MessagesState) -> Command[Literal["validator"]]:
+
+def research_node(state: MessagesState) -> Command[Literal["passthrough"]]:
     """
     Research agent node that gathers information using Tavily search.
     Takes the current task state, performs relevant research,
@@ -29,9 +31,11 @@ def research_node(state: MessagesState) -> Command[Literal["validator"]]:
             ("placeholder", "{messages}"),
         ]
     )
+    llm=ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+    tavily_search = TavilySearchResults(llm=llm, max_results=3)
     
     research_agent = create_react_agent(
-        search_llm,  
+        llm=llm,  
         tools=[tavily_search],  
         prompt=prompt
     )

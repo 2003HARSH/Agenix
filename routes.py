@@ -1,5 +1,5 @@
 # Agenix/routes.py
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, render_template, request, session,redirect, url_for
 from flask_login import login_required, current_user
 from graph import runnable
 from langchain_core.messages import HumanMessage, AIMessage
@@ -8,6 +8,8 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.chat'))
     return render_template('index.html')
 
 @main_bp.route('/chat', methods=['GET', 'POST'])

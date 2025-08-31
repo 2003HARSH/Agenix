@@ -2,9 +2,9 @@ from typing import Literal
 from pydantic import BaseModel, Field
 from langchain_core.messages import HumanMessage
 from langgraph.graph import  MessagesState
-from config.llm_tools import llm
 from langgraph.types import Command
 from langgraph.graph import END
+from langchain_google_genai import ChatGoogleGenerativeAI 
 
 
 
@@ -44,7 +44,7 @@ def validator_node(state: MessagesState) -> Command[Literal["supervisor", "__end
         {"role": "user", "content": user_question},
         {"role": "assistant", "content": agent_answer},
     ]
-
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
     response = llm.with_structured_output(Validator).invoke(messages)
 
     goto = response.next
