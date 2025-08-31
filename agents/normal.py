@@ -18,5 +18,5 @@ def normal_node(state: MessagesState) -> Command[Literal["validator"]]:
                 HumanMessage(content=result.content, name="normal")
             ]
         },
-        goto=END,
+        goto='passthrough',
     )

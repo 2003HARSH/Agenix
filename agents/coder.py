@@ -34,11 +34,14 @@ def code_node(state: MessagesState) -> Command[Literal["validator"]]:
 
     print(f"--- Workflow Transition: Coder → Validator ---")
 
+    final_content = f"Execution Result:\n\n\n{result['messages'][-1].content}\n"
+
+
     return Command(
         update={
             "messages": [
-                HumanMessage(content=result["messages"][-1].content, name="coder")
+                HumanMessage(content=final_content, name="coder")
             ]
         },
-        goto="validator",
+        goto="passthrough",
     )

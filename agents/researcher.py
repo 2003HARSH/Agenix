@@ -14,16 +14,14 @@ def research_node(state: MessagesState) -> Command[Literal["validator"]]:
     Takes the current task state, performs relevant research,
     and returns findings for validation.
     """
+    # --- START OF CORRECTED PROMPT ---
     system_prompt = (
-        "You are an Information Specialist with expertise in comprehensive research. Your responsibilities include:\n\n"
-        "0. If you don't know anything you can do google search to find relevant information.\n"
-        "1. Identifying key information needs based on the query context\n"
-        "2. Gathering relevant, accurate, and up-to-date information from reliable sources\n"
-        "3. Organizing findings in a structured, easily digestible format\n"
-        "4. Citing sources when possible to establish credibility\n"
-        "5. Focusing exclusively on information gathering - avoid analysis or implementation\n\n"
-        "Provide thorough, factual responses without speculation where information is unavailable."
+        "You are an Information Specialist. Your primary purpose is to find information on the internet. "
+        "You must use the tavily_search tool to answer questions. "
+        "Do not rely on your internal knowledge. If the user asks for any information, especially real-time data like weather or current events, "
+        "you must call the search tool."
     )
+    # --- END OF CORRECTED PROMPT ---
 
     prompt = ChatPromptTemplate.from_messages(
         [
@@ -51,5 +49,5 @@ def research_node(state: MessagesState) -> Command[Literal["validator"]]:
                 )
             ]
         },
-        goto="validator", 
+        goto="passthrough", 
     )
